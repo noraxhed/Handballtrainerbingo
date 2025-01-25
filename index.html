@@ -13,18 +13,20 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
       background-color: #f9f9f9;
     }
+
     .grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr); /* 4 Spalten */
-      grid-template-rows: repeat(4, 1fr); /* 4 Zeilen */
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(4, 1fr);
       gap: 5px;
-      width: 90vmin; /* Dynamische Größe für kleinere Bildschirme */
-      height: 90vmin; /* Hält das Grid quadratisch */
+      width: min(90vmin, 500px);
+      height: min(90vmin, 500px);
       margin: 0 auto;
     }
+
     .cell {
       display: flex;
       justify-content: center;
@@ -33,12 +35,13 @@
       border: 1px solid #ccc;
       background-color: #f4f4f4;
       cursor: pointer;
-      font-size: calc(2vmin); /* Schriftgröße passt sich an Bildschirmgröße an */
+      font-size: calc(2vmin);
       box-sizing: border-box;
       overflow-wrap: break-word;
       word-wrap: break-word;
-      aspect-ratio: 1 / 1; /* Quadratische Zellen */
+      aspect-ratio: 1 / 1;
     }
+
     .cell.active {
       background-color: #4caf50;
       color: white;
@@ -49,73 +52,73 @@
   <h1>DAS Handball-Bingo</h1>
   <p>Klick auf die Felder, um sie abzustreichen!</p>
   <div class="grid" id="bingoGrid"></div>
-<p class="note">Ein Klick markiert das Feld, ein zweiter Klick hebt es wieder auf. Sollte es Uneinigkeit beim Abstreichen geben, besprecht es gemeinsam in der Gruppe.</p>
+  <p class="note">Ein Klick markiert das Feld, ein zweiter Klick hebt es wieder auf. Sollte es Uneinigkeit beim Abstreichen geben, besprecht es gemeinsam in der Gruppe.</p>
   <script>
-  const phrases = [
-    "Wir brauchen 100% 💯",
-    "Jetzt werdet mal wach! 🔔",
-    "Ruhig/-er! 🤫",
-    "Ihr müsst mehr reden! 🗣️",
-    "Arme! 💪",
-    "Taktisch ungünstige Auszeit ⏱️",
-    "Gelbe Karte wegen Meckern 🟨",
-    "Der nächste geht rein! 🎯",
-    "Schlägt die Hände über dem Kopf zusammen 🤦",
-    "Wildes Rumgestöhne 😤",
-    "Über den Schiri meckern 🙄",
-    "Schnelle Beine/Füße 🏃‍♂️",
-    "Verschieben! 🔄",
-    "Schiri 👋",
-    "Trainer ruft random Spielzug rein 📋",
-    "Bonusfeld 🎉",
-    "Trainer trägt keine Sportkleidung 👟",
-    "Kopf hoch ✊",
-    "Mehr in die Nahtstellen/Tiefe ➡️",
-    "Ruft Zeit rein ⌛",
-    "Katastrophe 🚨",
-    "Raus! / Vor! 🏁"
-  ];
-
-  const grid = document.getElementById('bingoGrid');
-  const shuffled = phrases.sort(() => 0.5 - Math.random()).slice(0, 16);
-
-  shuffled.forEach((phrase) => {
-    const cell = document.createElement('div');
-    cell.className = 'cell';
-    cell.textContent = phrase;
-    cell.addEventListener('click', () => {
-      cell.classList.toggle('active');
-      checkBingo(); // Ruft die Funktion auf, um Bingo zu prüfen
-    });
-    grid.appendChild(cell);
-  });
-
-  function checkBingo() {
-    const cells = Array.from(document.querySelectorAll('.cell'));
-    const activeCells = cells.map((cell, i) => (cell.classList.contains('active') ? i : null)).filter(i => i !== null);
-
-    const bingoPatterns = [
-      [0, 1, 2, 3],
-      [4, 5, 6, 7],
-      [8, 9, 10, 11],
-      [12, 13, 14, 15],
-      [0, 4, 8, 12],
-      [1, 5, 9, 13],
-      [2, 6, 10, 14],
-      [3, 7, 11, 15],
-      [0, 5, 10, 15],
-      [3, 6, 9, 12]
+    const phrases = [
+      "Wir brauchen 100% 💯",
+      "Jetzt werdet mal wach! 🔔",
+      "Ruhig/-er! 🤫",
+      "Ihr müsst mehr reden! 🗣️",
+      "Arme! 💪",
+      "Taktisch ungünstige Auszeit ⏱️",
+      "Gelbe Karte wegen Meckern 🟨",
+      "Der nächste geht rein! 🎯",
+      "Schlägt die Hände über dem Kopf zusammen 🤦",
+      "Wildes Rumgestöhne 😤",
+      "Über den Schiri meckern 🙄",
+      "Schnelle Beine/Füße 🏃‍♂️",
+      "Verschieben! 🔄",
+      "Schiri 👋",
+      "Trainer ruft random Spielzug rein 📋",
+      "Bonusfeld 🎉",
+      "Trainer trägt keine Sportkleidung 👟",
+      "Kopf hoch ✊",
+      "Mehr in die Nahtstellen/Tiefe ➡️",
+      "Ruft Zeit rein ⌛",
+      "Katastrophe 🚨",
+      "Raus! / Vor! 🏁"
     ];
 
-    for (const pattern of bingoPatterns) {
-      if (pattern.every(index => activeCells.includes(index))) {
-        if (confirm("Bingo erkannt! Bist du dir sicher?")) {
-          alert("🎉 Bingo! Herzlichen Glückwunsch! 🎉");
+    const grid = document.getElementById('bingoGrid');
+    const shuffled = phrases.sort(() => 0.5 - Math.random()).slice(0, 16);
+
+    shuffled.forEach((phrase) => {
+      const cell = document.createElement('div');
+      cell.className = 'cell';
+      cell.textContent = phrase;
+      cell.addEventListener('click', () => {
+        cell.classList.toggle('active');
+        checkBingo();
+      });
+      grid.appendChild(cell);
+    });
+
+    function checkBingo() {
+      const cells = Array.from(document.querySelectorAll('.cell'));
+      const activeCells = cells.map((cell, i) => (cell.classList.contains('active') ? i : null)).filter(i => i !== null);
+
+      const bingoPatterns = [
+        [0, 1, 2, 3],
+        [4, 5, 6, 7],
+        [8, 9, 10, 11],
+        [12, 13, 14, 15],
+        [0, 4, 8, 12],
+        [1, 5, 9, 13],
+        [2, 6, 10, 14],
+        [3, 7, 11, 15],
+        [0, 5, 10, 15],
+        [3, 6, 9, 12]
+      ];
+
+      for (const pattern of bingoPatterns) {
+        if (pattern.every(index => activeCells.includes(index))) {
+          if (confirm("Bingo erkannt! Bist du dir sicher?")) {
+            alert("🎉 Bingo! Herzlichen Glückwunsch! 🎉");
+          }
+          break;
         }
-        break;
       }
     }
-  }
-</script>
+  </script>
 </body>
 </html>

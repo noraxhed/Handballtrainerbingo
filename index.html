@@ -16,7 +16,6 @@
       height: 100vh;
       background-color: #f9f9f9;
     }
-
     .grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr); /* 4 Spalten */
@@ -26,7 +25,6 @@
       height: 90vmin; /* Hält das Grid quadratisch */
       margin: 0 auto;
     }
-
     .cell {
       display: flex;
       justify-content: center;
@@ -41,7 +39,6 @@
       word-wrap: break-word;
       aspect-ratio: 1 / 1; /* Quadratische Zellen */
     }
-
     .cell.active {
       background-color: #4caf50;
       color: white;
@@ -51,7 +48,6 @@
 <body>
   <h1>DAS Handball-Bingo</h1>
   <p>Klick auf die Felder, um sie abzustreichen!</p>
-
   <div class="grid" id="bingoGrid"></div>
 <p class="note">Ein Klick markiert das Feld, ein zweiter Klick hebt es wieder auf. Sollte es Uneinigkeit beim Abstreichen geben, besprecht es gemeinsam in der Gruppe.</p>
   <script>
@@ -92,6 +88,33 @@
       });
       grid.appendChild(cell);
     });
-  </script>
+
+    function checkBingo() { // Füge die Funktion hier ein (ab Zeile 54)
+    const cells = Array.from(document.querySelectorAll('.cell'));
+    const activeCells = cells.map((cell, i) => (cell.classList.contains('active') ? i : null)).filter(i => i !== null);
+
+    const bingoPatterns = [
+      [0, 1, 2, 3],
+      [4, 5, 6, 7],
+      [8, 9, 10, 11],
+      [12, 13, 14, 15],
+      [0, 4, 8, 12],
+      [1, 5, 9, 13],
+      [2, 6, 10, 14],
+      [3, 7, 11, 15],
+      [0, 5, 10, 15],
+      [3, 6, 9, 12]
+    ];
+
+    for (const pattern of bingoPatterns) {
+      if (pattern.every(index => activeCells.includes(index))) {
+        if (confirm("Bingo erkannt! Bist du dir sicher?")) {
+          alert("🎉 Bingo! Herzlichen Glückwunsch! 🎉");
+        }
+        break;
+      }
+    }
+  }
+</script>
 </body>
 </html>

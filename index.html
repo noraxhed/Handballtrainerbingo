@@ -6,16 +6,17 @@
   <title>DAS Handball-Bingo</title>
   <style>
     body {
-  font-family: Arial, sans-serif;
-  text-align: center;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #f9f9f9;
-}
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f9f9f9;
+    }
+
     .grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -40,15 +41,43 @@
       word-wrap: break-word;
       aspect-ratio: 1 / 1;
     }
+
     .cell.active {
       background-color: #4caf50;
       color: white;
+    }
+
+    /* Responsive Anpassungen für kleinere Bildschirme */
+    @media (max-width: 768px) {
+      .grid {
+        width: 90%;
+        height: auto;
+        grid-template-columns: repeat(2, 1fr); /* Nur 2 Spalten */
+        grid-template-rows: repeat(8, 1fr); /* Mehr Zeilen */
+      }
+
+      .cell {
+        font-size: 12px;
+        padding: 8px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .grid {
+        width: 100%;
+        gap: 3px;
+      }
+
+      .cell {
+        font-size: 10px;
+        padding: 5px;
+      }
     }
   </style>
 </head>
 <body>
   <h1>Bingo</h1>
-  <p>Klick auf die Felder um sie abzustreichen!</p>
+  <p>Klick auf die Felder, um sie abzustreichen!</p>
   <div class="grid" id="bingoGrid"></div>
   <script>
     const phrases = [
@@ -78,14 +107,14 @@
 
     // Randomize phrases and display in grid
     const grid = document.getElementById('bingoGrid');
-    const shuffled = phrases.sort(() => 0.5 - Math.random()).slice(0, 16); // Random 4x4
+    const shuffled = phrases.sort(() => 0.5 - Math.random()).slice(0, 16);
 
     shuffled.forEach((phrase) => {
       const cell = document.createElement('div');
       cell.className = 'cell';
       cell.textContent = phrase;
       cell.addEventListener('click', () => {
-        cell.classList.toggle('active'); // Mark cell as active
+        cell.classList.toggle('active');
       });
       grid.appendChild(cell);
     });

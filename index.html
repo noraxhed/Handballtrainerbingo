@@ -51,45 +51,46 @@
   <div class="grid" id="bingoGrid"></div>
 <p class="note">Ein Klick markiert das Feld, ein zweiter Klick hebt es wieder auf. Sollte es Uneinigkeit beim Abstreichen geben, besprecht es gemeinsam in der Gruppe.</p>
   <script>
-    const phrases = [
-  "Wir brauchen 100% 💯",
-  "Jetzt werdet mal wach! 🔔",
-  "Ruhig/-er! 🤫",
-  "Ihr müsst mehr reden! 🗣️",
-  "Arme! 💪",
-  "Taktisch ungünstige Auszeit ⏱️",
-  "Gelbe Karte wegen Meckern 🟨",
-  "Der nächste geht rein! 🎯",
-  "Schlägt die Hände über dem Kopf zusammen 🤦",
-  "Wildes Rumgestöhne 😤",
-  "Über den Schiri meckern 🙄",
-  "Schnelle Beine/Füße 🏃‍♂️",
-  "Verschieben! 🔄",
-  "Schiri 👋",
-  "Trainer ruft random Spielzug rein 📋",
-  "Bonusfeld 🎉",
-  "Trainer trägt keine Sportkleidung 👟",
-  "Kopf hoch ✊",
-  "Mehr in die Nahtstellen/Tiefe ➡️",
-  "Ruft Zeit rein ⌛",
-  "Katastrophe 🚨",
-  "Raus! / Vor! 🏁"
-    ];
+  const phrases = [
+    "Wir brauchen 100% 💯",
+    "Jetzt werdet mal wach! 🔔",
+    "Ruhig/-er! 🤫",
+    "Ihr müsst mehr reden! 🗣️",
+    "Arme! 💪",
+    "Taktisch ungünstige Auszeit ⏱️",
+    "Gelbe Karte wegen Meckern 🟨",
+    "Der nächste geht rein! 🎯",
+    "Schlägt die Hände über dem Kopf zusammen 🤦",
+    "Wildes Rumgestöhne 😤",
+    "Über den Schiri meckern 🙄",
+    "Schnelle Beine/Füße 🏃‍♂️",
+    "Verschieben! 🔄",
+    "Schiri 👋",
+    "Trainer ruft random Spielzug rein 📋",
+    "Bonusfeld 🎉",
+    "Trainer trägt keine Sportkleidung 👟",
+    "Kopf hoch ✊",
+    "Mehr in die Nahtstellen/Tiefe ➡️",
+    "Ruft Zeit rein ⌛",
+    "Katastrophe 🚨",
+    "Raus! / Vor! 🏁"
+  ];
 
-    const grid = document.getElementById('bingoGrid');
-    const shuffled = phrases.sort(() => 0.5 - Math.random()).slice(0, 16);
+  const grid = document.getElementById('bingoGrid');
+  const shuffled = phrases.sort(() => 0.5 - Math.random()).slice(0, 16);
 
-    shuffled.forEach((phrase) => {
-      const cell = document.createElement('div');
-      cell.className = 'cell';
-      cell.textContent = phrase;
-      cell.addEventListener('click', () => {
-        cell.classList.toggle('active');
-      });
-      grid.appendChild(cell);
+  shuffled.forEach((phrase) => {
+    const cell = document.createElement('div');
+    cell.className = 'cell';
+    cell.textContent = phrase;
+    cell.addEventListener('click', () => {
+      cell.classList.toggle('active');
+      checkBingo(); // Ruft die Funktion auf, um Bingo zu prüfen
     });
+    grid.appendChild(cell);
+  });
 
-    function checkBingo() { // Füge die Funktion hier ein (ab Zeile 54)
+  function checkBingo() {
     const cells = Array.from(document.querySelectorAll('.cell'));
     const activeCells = cells.map((cell, i) => (cell.classList.contains('active') ? i : null)).filter(i => i !== null);
 
